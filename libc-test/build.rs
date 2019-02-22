@@ -277,7 +277,7 @@ fn do_ctest() {
             cfg.header("linux/netfilter_ipv6.h");
             cfg.header("linux/fs.h");
         }
-        if !musl {
+        if !musl && !uclibc {
             cfg.header("asm/mman.h");
             cfg.header("linux/magic.h");
             cfg.header("linux/reboot.h");

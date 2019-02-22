@@ -120,7 +120,7 @@ fn do_ctest() {
         cfg.header("sys/mman.h");
         cfg.header("sys/resource.h");
         cfg.header("sys/socket.h");
-        if linux && !musl {
+        if linux && !musl && !uclibc {
             cfg.header("linux/if.h");
             cfg.header("sys/auxv.h");
         }

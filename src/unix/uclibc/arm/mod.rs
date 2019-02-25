@@ -13,6 +13,7 @@ pub type pthread_t = ::c_ulong;
 pub type rlim_t = ::c_ulong;
 pub type suseconds_t = ::c_long;
 pub type shmatt_t = ::c_ulong;
+pub type key_t = ::c_int;
 
 pub type nlink_t = ::c_uint;
 pub type blksize_t = ::c_long;
@@ -67,6 +68,25 @@ s! {
         __unused5: ::c_ulong,
     }
 
+    pub struct fsid_t {
+        __val: [::c_int; 2],
+    }
+
+    pub struct statfs {
+        pub f_type: ::c_int,
+        pub f_bsize: ::c_int,
+        pub f_blocks: ::fsblkcnt_t,
+        pub f_bfree: ::fsblkcnt_t,
+        pub f_bavail: ::fsblkcnt_t,
+        pub f_files: ::fsfilcnt_t,
+        pub f_ffree: ::fsfilcnt_t,
+
+        pub f_fsid: ::fsid_t,
+        pub f_namelen: ::c_int,
+        pub f_frsize: ::c_int,
+        pub f_spare: [::c_int; 5],
+    }
+
     pub struct sigset_t {
         __val: [::c_ulong; 2],
     }
@@ -104,6 +124,20 @@ s! {
         pub ss_sp: *mut ::c_void,
         ss_flags: ::c_int,
         ss_size: ::size_t,
+    }
+
+    pub struct ipc_perm {
+        pub __key: ::key_t,
+        pub uid: ::uid_t,
+        pub gid: ::git_t,
+        pub cuid: ::uid_t,
+        pub cgid: ::gid_t,
+        pub mode: ::c_ushort,
+        pub __pad1: ::c_ushort,
+        pub __seq: ::c_ushort,
+        pub __pad2: ::c_ushort,
+        pub __unused1: ::c_ulong,
+        pub __unused2: ::c_ulong,
     }
 
     pub struct msqid_ds {

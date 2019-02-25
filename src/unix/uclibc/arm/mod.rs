@@ -216,7 +216,8 @@ pub const EUSERS: ::c_int = 0x57;
 pub const EXFULL: ::c_int = 0x36;
 pub const FF1: ::c_int = 0x8000;
 pub const FFDLY: ::c_int = 0x8000;
-pub const FIONBIO: ::c_int = 0x5421;
+pub const FIONBIO: ::c_ulong = 0x5421;
+pub const FIOCLEX: ::c_ulong = 0x5451;
 pub const FLUSHO: ::c_int = 0x1000;
 pub const F_GETLK: ::c_int = 0x5;
 pub const F_SETLK: ::c_int = 0x6;
@@ -432,7 +433,6 @@ pub const _SC_V6_ILP32_OFFBIG: ::c_int = 0xb1;
 pub const _SC_V6_LP64_OFF64: ::c_int = 0xb2;
 pub const _SC_V6_LPBIG_OFFBIG: ::c_int = 0xb3;
 pub const _SC_XOPEN_STREAMS: ::c_int = 0xf6;
-pub const FIOCLEX: ::c_int = 0x5451;
 
 s! {
     pub struct msghdr {

@@ -432,6 +432,7 @@ pub const _SC_V6_ILP32_OFFBIG: ::c_int = 0xb1;
 pub const _SC_V6_LP64_OFF64: ::c_int = 0xb2;
 pub const _SC_V6_LPBIG_OFFBIG: ::c_int = 0xb3;
 pub const _SC_XOPEN_STREAMS: ::c_int = 0xf6;
+pub const FIOCLEX: ::c_int = 0x5451;
 
 s! {
     pub struct msghdr {
@@ -492,7 +493,7 @@ s! {
     }
 
     pub struct sigaction {
-        pub sa_handler: ::sighandler_t,
+        pub sa_sigaction: ::sighandler_t,
         pub sa_flags: ::c_ulong,
         pub sa_restorer: *mut ::c_void,
         pub sa_mask: sigset_t,
@@ -572,4 +573,8 @@ s! {
         pub __unused4: ::c_ulong,
         pub __unused5: ::c_ulong,
     }
+}
+
+extern {
+    pub fn ioctl(fd: ::c_int, request: ::c_ulong, ...) -> ::c_int;
 }

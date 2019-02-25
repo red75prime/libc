@@ -129,7 +129,7 @@ s! {
     pub struct ipc_perm {
         pub __key: ::key_t,
         pub uid: ::uid_t,
-        pub gid: ::git_t,
+        pub gid: ::gid_t,
         pub cuid: ::uid_t,
         pub cgid: ::gid_t,
         pub mode: ::c_ushort,

@@ -1132,10 +1132,7 @@ cfg_if! {
 }
 
 cfg_if! {
-    if #[cfg(all(target_env = "uclibc", target_arch = "arm"))] {
-        mod notbsd;
-        pub use self::notbsd::*;
-    } else if #[cfg(target_env = "uclibc")] {
+    if #[cfg(target_env = "uclibc")] {
         mod uclibc;
         pub use self::uclibc::*;
     } else if #[cfg(target_env = "newlib")] {

@@ -27,7 +27,7 @@ s! {
         msg_iovlen: ::c_int,
         msg_control: *mut ::c_void,
         msg_controllen: ::socklen_t,
-        msg_flags: :c_int,
+        msg_flags: ::c_int,
     }
 
     pub struct pthread_attr_t {

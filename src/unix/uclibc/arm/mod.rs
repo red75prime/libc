@@ -11,15 +11,14 @@ pub type ino_t = ::c_ulong;
 pub type off_t = ::c_long;
 pub type pthread_t = ::c_ulong;
 pub type rlim_t = ::c_ulong;
-// shmid_ds test12;
 pub type suseconds_t = ::c_long;
-// termios test17;
+pub type shmatt_t = ::c_ulong;
 
 pub type nlink_t = ::c_uint;
 pub type blksize_t = ::c_long;
 pub type blkcnt_t = ::c_long;
 
-pub const O_CLOEXEC: c_int = 0o2000000;
+pub const O_CLOEXEC: ::c_int = 0o2000000;
 pub const RLIM_INFINITY: rlim_t = !0;
 pub const __SIZEOF_PTHREAD_ATTR_T: usize = 36;
 pub const __SIZEOF_PTHREAD_MUTEX_T: usize = 24;
@@ -31,6 +30,7 @@ pub const __SIZEOF_PTHREAD_RWLOCK_T: usize = 32;
 pub const __SIZEOF_PTHREAD_RWLOCKATTR_T: usize = 8;
 pub const __SIZEOF_PTHREAD_BARRIER_T: usize = 20;
 pub const __SIZEOF_PTHREAD_BARRIERATTR_T: usize = 4;
+pub const NCCS: usize = 32;
 
 s! {
     pub struct msghdr {
@@ -106,21 +106,36 @@ s! {
         ss_size: ::size_t,
     }
 
-// struct msqid_ds
-// {
-//   struct ipc_perm msg_perm;
-//   __time_t msg_stime;
-//   unsigned long int __unused1;
-//   __time_t msg_rtime;
-//   unsigned long int __unused2;
-//   __time_t msg_ctime;
-//   unsigned long int __unused3;
-//   unsigned long int __msg_cbytes;
-//   msgqnum_t msg_qnum;
-//   msglen_t msg_qbytes;
-//   __pid_t msg_lspid;
-//   __pid_t msg_lrpid;
-//   unsigned long int __unused4;
-//   unsigned long int __unused5;
-// };    
+    pub struct msqid_ds {
+        pub msg_perm: ::ipc_perm,
+        pub msg_stime: ::time_t,
+        pub __unused1: ::c_ulong,
+        pub msg_rtime: ::time_t,
+        pub __unused2: ::c_ulong,
+        pub msg_ctime: ::time_t,
+        pub __unused3: ::c_ulong,
+        pub __msg_cbytes: ::c_ulong,
+        pub msg_qnum: ::msgqnum_t,
+        pub msg_qbytes: ::msglen_t,
+        pub msg_lspid: ::pid_t,
+        pub msg_lrpid: ::pid_t,
+        pub __unused4: ::c_ulong,
+        pub __unused5: ::c_ulong,
+    }
+
+    pub struct shmid_ds {
+        pub shm_perm: ::ipc_perm,
+        pub shm_segsz: ::size_t,
+        pub shm_atime: ::time_t,
+        pub __unused1: ::c_ulong,
+        pub shm_dtime: ::time_t,
+        pub __unused2: ::c_ulong,
+        pub shm_ctime: ::time_t,
+        pub __unused3: ::c_ulong,
+        pub shm_cpid: ::pid_t,
+        pub shm_lpid: ::pid_t,
+        pub shm_nattch: ::shmatt_t,
+        pub __unused4: ::c_ulong,
+        pub __unused5: ::c_ulong,
+    }
 }

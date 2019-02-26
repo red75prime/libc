@@ -316,13 +316,13 @@ pub const QIF_LIMITS: ::uint32_t = 0x5;
 pub const QIF_SPACE: ::uint32_t = 0x2;
 pub const QIF_TIMES: ::uint32_t = 0x30;
 pub const QIF_USAGE: ::uint32_t = 0xa;
-pub const SA_NOCLDSTOP: ::c_ulong = 0x1;
-pub const SA_NOCLDWAIT: ::c_ulong = 0x2;
-pub const SA_NODEFER: ::c_ulong = 0x40000000;
-pub const SA_ONSTACK: ::c_ulong = 0x8000000;
-pub const SA_RESETHAND: ::c_ulong = 0x80000000;
-pub const SA_RESTART: ::c_ulong = 0x10000000;
-pub const SA_SIGINFO: ::c_ulong = 0x4;
+pub const SA_NOCLDSTOP: ::c_int = 0x1;
+pub const SA_NOCLDWAIT: ::c_int = 0x2;
+pub const SA_NODEFER: ::c_int = 0x40000000;
+pub const SA_ONSTACK: ::c_int = 0x8000000;
+pub const SA_RESETHAND: ::c_int = 0x80000000;
+pub const SA_RESTART: ::c_int = 0x10000000;
+pub const SA_SIGINFO: ::c_int = 0x4;
 pub const SFD_CLOEXEC: ::c_int = 0x80000;
 pub const SFD_NONBLOCK: ::c_int = 0x800;
 pub const SIGBUS: ::c_int = 0x7;
@@ -521,7 +521,8 @@ s! {
 
     pub struct sigaction {
         pub sa_sigaction: ::sighandler_t,
-        pub sa_flags: ::c_ulong,
+        // uClibc defines sa_flags as `unsigned long int`, but nix crate expects `int`
+        pub sa_flags: ::c_int,
         pub sa_restorer: *mut ::c_void,
         pub sa_mask: sigset_t,
     }

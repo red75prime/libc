@@ -463,13 +463,13 @@ s! {
     }
 
     pub struct msghdr {
-        msg_name: *mut ::c_void,
-        msg_namelen: ::socklen_t,
-        msg_iov: *mut ::iovec,
-        msg_iovlen: ::c_int,
-        msg_control: *mut ::c_void,
-        msg_controllen: ::socklen_t,
-        msg_flags: ::c_int,
+        pub msg_name: *mut ::c_void,
+        pub msg_namelen: ::socklen_t,
+        pub msg_iov: *mut ::iovec,
+        pub msg_iovlen: ::c_int,
+        pub msg_control: *mut ::c_void,
+        pub msg_controllen: ::socklen_t,
+        pub msg_flags: ::c_int,
     }
 
     pub struct pthread_attr_t {

@@ -348,6 +348,7 @@ pub const SIG_BLOCK: ::c_int = 0;
 pub const SIG_SETMASK: ::c_int = 0x2;
 pub const SIG_UNBLOCK: ::c_int = 0x1;
 pub const SOCK_DGRAM: ::c_int = 0x2;
+pub const SOCK_NONBLOCK: ::c_int = 0o0004000;
 pub const SOCK_SEQPACKET: ::c_int = 0x5;
 pub const SOCK_STREAM: ::c_int = 0x1;
 pub const SOL_SOCKET: ::c_int = 0x1;
@@ -455,6 +456,12 @@ pub const _SC_V6_LPBIG_OFFBIG: ::c_int = 0xb3;
 pub const _SC_XOPEN_STREAMS: ::c_int = 0xf6;
 
 s! {
+    pub struct cmsghdr {
+        pub cmsg_len: ::size_t,
+        pub cmsg_level: ::c_int,
+        pub cmsg_type: ::c_int,
+    }
+
     pub struct msghdr {
         msg_name: *mut ::c_void,
         msg_namelen: ::socklen_t,

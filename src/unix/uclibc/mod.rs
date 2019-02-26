@@ -1865,7 +1865,6 @@ extern {
                      buf: *mut stat64, flag: ::c_int) -> ::c_int;
     pub fn ftruncate64(fd: ::c_int, length: off64_t) -> ::c_int;
     pub fn getrlimit64(resource: ::c_int, rlim: *mut rlimit64) -> ::c_int;
-    pub fn lseek64(fd: ::c_int, offset: off64_t, whence: ::c_int) -> off64_t;
     pub fn lstat64(path: *const c_char, buf: *mut stat64) -> ::c_int;
     pub fn mmap64(addr: *mut ::c_void,
                   len: ::size_t,
@@ -1888,6 +1887,10 @@ extern {
     pub fn setrlimit64(resource: ::c_int, rlim: *const rlimit64) -> ::c_int;
     pub fn stat64(path: *const c_char, buf: *mut stat64) -> ::c_int;
     pub fn truncate64(path: *const c_char, length: off64_t) -> ::c_int;
+}
+
+extern {
+    pub fn lseek64(fd: ::c_int, offset: off64_t, whence: ::c_int) -> off64_t;
 }
 
 cfg_if! {

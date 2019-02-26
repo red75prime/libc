@@ -601,6 +601,13 @@ s! {
         pub __unused4: ::c_ulong,
         pub __unused5: ::c_ulong,
     }
+
+    pub struct ucred {
+        pub pid: ::pid_t,
+        pub uid: ::uid_t,
+        pub gid: ::gid_t,
+    }
+
 }
 
 extern {

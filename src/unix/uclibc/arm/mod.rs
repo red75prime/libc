@@ -8,6 +8,7 @@ pub type clock_t = ::c_long;
 pub type fsblkcnt_t = ::c_ulong;
 pub type fsfilcnt_t = ::c_ulong;
 pub type ino_t = ::c_ulong;
+pub type ino64_t = ::c_ulonglong;
 pub type off_t = ::c_long;
 pub type off64_t = i64;
 pub type pthread_t = ::c_ulong;
@@ -69,11 +70,6 @@ s! {
         pub l_start: ::off_t,
         pub l_len: ::off_t,
         pub l_pid: ::pid_t,
-    }
-
-    // uClibc doesn't support AIO
-    pub struct aiocb {
-        pub not_supported: ::c_int,
     }
 }
 
@@ -478,22 +474,43 @@ s! {
 
     pub struct stat {
         pub st_dev: ::c_ulonglong,
-        __pad1: ::c_ushort,
+        pub __pad1: ::c_ushort,
         pub st_ino: ::ino_t,
         pub st_mode: ::mode_t,
         pub st_nlink: ::nlink_t,
         pub st_uid: ::uid_t,
         pub st_gid: ::gid_t,
         pub st_rdev: ::c_ulonglong,
-        __pad2: ::c_ushort,
+        pub __pad2: ::c_ushort,
         pub st_size: ::off_t,
         pub st_blksize: ::blksize_t,
         pub st_blocks: ::blkcnt_t,
         pub st_atim: ::timespec,
         pub st_mtim: ::timespec,
         pub st_ctim: ::timespec,
-        __unused4: ::c_ulong,
-        __unused5: ::c_ulong,
+        pub __unused4: ::c_ulong,
+        pub __unused5: ::c_ulong,
+    }
+
+    pub struct stat64
+    {
+        pub st_dev: ::c_ulonglong,
+        pub __pad1: ::c_uint,
+
+        pub __st_ino: ::ino_t,
+        pub st_mode: ::mode_t,
+        pub st_nlink: ::nlink_t,
+        pub st_uid: ::uid_t,
+        pub st_gid: ::gid_t,
+        pub st_rdev: ::c_ulonglong,
+        pub __pad2: ::c_uint,
+        pub st_size: ::off64_t,
+        pub st_blksize: ::blksize_t,
+        pub st_blocks: ::blkcnt64_t,
+        pub st_atim: ::timespec,
+        pub st_mtim: ::timespec,
+        pub st_ctim: ::timespec,
+        pub st_ino: ::ino64_t,
     }
 
     pub struct fsid_t {
@@ -626,15 +643,4 @@ extern {
                   iov: *const ::iovec,
                   iovcnt: ::c_int,
                   offset: ::off_t) -> ::ssize_t;
-    // uClibc doesn't support AIO, expect link error
-    pub fn aio_read(aiocbp: *mut aiocb) -> ::c_int;
-    pub fn aio_write(aiocbp: *mut aiocb) -> ::c_int;
-    pub fn aio_fsync(op: ::c_int, aiocbp: *mut aiocb) -> ::c_int;
-    pub fn aio_error(aiocbp: *const aiocb) -> ::c_int;
-    pub fn aio_return(aiocbp: *mut aiocb) -> ::ssize_t;
-    pub fn aio_suspend(aiocb_list: *const *const aiocb, nitems: ::c_int,
-                       timeout: *const ::timespec) -> ::c_int;
-    pub fn aio_cancel(fd: ::c_int, aiocbp: *mut aiocb) -> ::c_int;
-    pub fn lio_listio(mode: ::c_int, aiocb_list: *const *mut aiocb,
-                      nitems: ::c_int, sevp: *mut ::sigevent) -> ::c_int;
 }

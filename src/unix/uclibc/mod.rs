@@ -281,14 +281,15 @@ s! {
     }
 
     pub struct dqblk {
-        pub dqb_bhardlimit: ::uint32_t,
-        pub dqb_bsoftlimit: ::uint32_t,
-        pub dqb_curblocks: ::uint32_t,
-        pub dqb_ihardlimit: ::uint32_t,
-        pub dqb_isoftlimit: ::uint32_t,
-        pub dqb_curinodes: ::uint32_t,
-        pub dqb_btime: ::time_t,
-        pub dqb_itime: ::time_t,
+        pub dqb_bhardlimit: ::uint64_t,
+        pub dqb_bsoftlimit: ::uint64_t,
+        pub dqb_curspace: ::uint64_t,
+        pub dqb_ihardlimit: ::uint64_t,
+        pub dqb_isoftlimit: ::uint64_t,
+        pub dqb_curinodes: ::uint64_t,
+        pub dqb_btime: ::uint64_t,
+        pub dqb_itime: ::uint64_t,
+        pub dqb_valid: ::uint32_t,
     }
 
     pub struct signalfd_siginfo {

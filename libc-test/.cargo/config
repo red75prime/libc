@@ -1,0 +1,8 @@
+#[target.aarch64-unknown-linux-gnu]
+#linker = "aarch64-linux-gnu-gcc"
+#rustflags = [ "-C", "link-args=-Wl,--verbose" ]
+
+[target.armv7-unknown-linux-uclibcgnueabi]
+linker = "arm-linux-gcc"
+runner = "/root/libc/libc-test/runner.sh"
+

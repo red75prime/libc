@@ -309,7 +309,7 @@ fn do_ctest() {
             cfg.header("linux/dccp.h");
         }
 
-        if !musl || mips {
+        if (!musl || mips) && !(uclibc && arm) {
             cfg.header("linux/memfd.h");
         }
     }

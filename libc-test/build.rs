@@ -14,6 +14,7 @@ fn do_cc() {}
 
 fn do_ctest() {
     let target = env::var("TARGET").unwrap();
+    let arm = target.contains("armv");
     let aarch64 = target.contains("aarch64");
     let i686 = target.contains("i686");
     let x86_64 = target.contains("x86_64");
@@ -120,7 +121,7 @@ fn do_ctest() {
         cfg.header("sys/mman.h");
         cfg.header("sys/resource.h");
         cfg.header("sys/socket.h");
-        if linux && !musl {
+        if linux && !musl && !uclibc {
             cfg.header("linux/if.h");
             cfg.header("sys/auxv.h");
         }
@@ -277,7 +278,7 @@ fn do_ctest() {
             cfg.header("linux/netfilter_ipv6.h");
             cfg.header("linux/fs.h");
         }
-        if !musl {
+        if !musl && !uclibc {
             cfg.header("asm/mman.h");
             cfg.header("linux/magic.h");
             cfg.header("linux/reboot.h");
@@ -294,8 +295,10 @@ fn do_ctest() {
 
     if linux || android {
         cfg.header("sys/fsuid.h");
-        cfg.header("linux/module.h");
-        cfg.header("linux/seccomp.h");
+        if !(uclibc && arm) {
+            cfg.header("linux/module.h");
+            cfg.header("linux/seccomp.h");
+        }
         cfg.header("linux/if_ether.h");
         cfg.header("linux/if_tun.h");
         cfg.header("linux/net_tstamp.h");
@@ -306,7 +309,7 @@ fn do_ctest() {
             cfg.header("linux/dccp.h");
         }
 
-        if !musl || mips {
+        if (!musl || mips) && !(uclibc && arm) {
             cfg.header("linux/memfd.h");
         }
     }
@@ -493,6 +496,12 @@ fn do_ctest() {
             | "proc_bsdinfo" | "proc_threadinfo" | "sockaddr_inarp"
             | "sockaddr_ctl" | "arphdr"
                 if ios =>
+            {
+                true
+            }
+
+            // uclibc deviates in signedness and type (but not size on 32-bit arm) of sa_flags
+            "sigaction" if uclibc && arm => 
             {
                 true
             }
@@ -752,6 +761,64 @@ fn do_ctest() {
                 true
             }
 
+            // No definition for these in buildroot build env
+            | "AIO_ALLDONE"
+            | "AIO_CANCELED"
+            | "AIO_NOTCANCELED"
+            | "CLONE_NEWCGROUP"
+            | "EPOLLEXCLUSIVE"
+            | "EPOLLWAKEUP"
+            | "EXTPROC"
+            | "GRND_NONBLOCK"
+            | "GRND_RANDOM"
+            | "IPPROTO_BEETPH"
+            | "IPPROTO_MH"
+            | "IPPROTO_MPLS"
+            | "LIO_NOP"
+            | "LIO_NOWAIT"
+            | "LIO_READ"
+            | "LIO_WAIT"
+            | "LIO_WRITE"
+            | "MAP_HUGETLB"
+            | "O_TMPFILE"
+            | "PR_GET_CHILD_SUBREAPER"
+            | "PR_GET_NO_NEW_PRIVS"
+            | "PR_GET_THP_DISABLE"
+            | "PR_GET_TID_ADDRESS"
+            | "PR_SET_CHILD_SUBREAPER"
+            | "PR_SET_MM"
+            | "PR_SET_MM_ARG_END"
+            | "PR_SET_MM_ARG_START"
+            | "PR_SET_MM_AUXV"
+            | "PR_SET_MM_BRK"
+            | "PR_SET_MM_END_CODE"
+            | "PR_SET_MM_END_DATA"
+            | "PR_SET_MM_ENV_END"
+            | "PR_SET_MM_ENV_START"
+            | "PR_SET_MM_EXE_FILE"
+            | "PR_SET_MM_MAP"
+            | "PR_SET_MM_MAP_SIZE"
+            | "PR_SET_MM_START_BRK"
+            | "PR_SET_MM_START_CODE"
+            | "PR_SET_MM_START_DATA"
+            | "PR_SET_MM_START_STACK"
+            | "PR_SET_NO_NEW_PRIVS"
+            | "PR_SET_PTRACER"
+            | "PR_SET_THP_DISABLE"
+            | "QFMT_VFS_OLD"
+            | "QFMT_VFS_V0"
+            | "RB_KEXEC"
+            | "RB_SW_SUSPEND"
+            | "SOL_NETLINK"
+            | "SO_BUSY_POLL"
+            | "SO_PEEK_OFF"
+            | "SO_REUSEPORT"
+            | "SI_LOAD_SHIFT"
+                if arm && uclibc =>
+            {
+                true
+            }
+
             _ => false,
         }
     });
@@ -977,7 +1044,7 @@ fn do_ctest() {
     cfg.skip_type(|_| true)
         .skip_fn(|_| true)
         .skip_static(|_| true);
-    if android || linux {
+    if (android || linux) && !(uclibc && arm) {
         // musl defines these directly in `fcntl.h`
         if musl {
             cfg.header("fcntl.h");

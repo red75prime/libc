@@ -1,0 +1,5 @@
+[target.armv7-unknown-linux-uclibcgnueabi.dependencies.std]
+features = [ "panic_unwind" ]
+stage = 0
+[target.armv7-unknown-linux-uclibcgnueabi.dependencies.test]
+stage = 1

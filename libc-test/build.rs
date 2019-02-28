@@ -1044,7 +1044,7 @@ fn do_ctest() {
     cfg.skip_type(|_| true)
         .skip_fn(|_| true)
         .skip_static(|_| true);
-    if android || linux {
+    if (android || linux) && !(uclibc && arm) {
         // musl defines these directly in `fcntl.h`
         if musl {
             cfg.header("fcntl.h");

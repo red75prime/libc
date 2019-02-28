@@ -1,5 +1,5 @@
 pub type c_char = u8;
-pub type wchar_t = ::c_int;
+pub type wchar_t = ::c_uint;
 pub type c_long = i32;
 pub type c_ulong = u32;
 pub type time_t = ::c_long;
@@ -549,8 +549,8 @@ s! {
 
     pub struct siginfo_t {
         pub si_signo: ::c_int,
-        pub si_code: ::c_int,
         pub si_errno: ::c_int,
+        pub si_code: ::c_int,
         pub _pad: [::c_int; 29],
     }
 

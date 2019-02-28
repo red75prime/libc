@@ -14,6 +14,7 @@ fn do_cc() {}
 
 fn do_ctest() {
     let target = env::var("TARGET").unwrap();
+    let arm = target.contains("armv");
     let aarch64 = target.contains("aarch64");
     let i686 = target.contains("i686");
     let x86_64 = target.contains("x86_64");
@@ -751,6 +752,65 @@ fn do_ctest() {
                 // FreeBSD 12 required, but CI has FreeBSD 11.
                 true
             }
+
+            // No definition for these in buildroot build env
+            | "AIO_ALLDONE"
+            | "AIO_CANCELED"
+            | "AIO_NOTCANCELED"
+            | "CLONE_NEWCGROUP"
+            | "EPOLLEXCLUSIVE"
+            | "EPOLLWAKEUP"
+            | "EXTPROC"
+            | "GRND_NONBLOCK"
+            | "GRND_RANDOM"
+            | "IPPROTO_BEETPH"
+            | "IPPROTO_MH"
+            | "IPPROTO_MPLS"
+            | "LIO_NOP"
+            | "LIO_NOWAIT"
+            | "LIO_READ"
+            | "LIO_WAIT"
+            | "LIO_WRITE"
+            | "MAP_HUGETLB"
+            | "O_TMPFILE"
+            | "PR_GET_CHILD_SUBREAPER"
+            | "PR_GET_NO_NEW_PRIVS"
+            | "PR_GET_THP_DISABLE"
+            | "PR_GET_TID_ADDRESS"
+            | "PR_SET_CHILD_SUBREAPER"
+            | "PR_SET_MM"
+            | "PR_SET_MM_ARG_END"
+            | "PR_SET_MM_ARG_START"
+            | "PR_SET_MM_AUXV"
+            | "PR_SET_MM_BRK"
+            | "PR_SET_MM_END_CODE"
+            | "PR_SET_MM_END_DATA"
+            | "PR_SET_MM_ENV_END"
+            | "PR_SET_MM_ENV_START"
+            | "PR_SET_MM_EXE_FILE"
+            | "PR_SET_MM_MAP"
+            | "PR_SET_MM_MAP_SIZE"
+            | "PR_SET_MM_START_BRK"
+            | "PR_SET_MM_START_CODE"
+            | "PR_SET_MM_START_DATA"
+            | "PR_SET_MM_START_STACK"
+            | "PR_SET_NO_NEW_PRIVS"
+            | "PR_SET_PTRACER"
+            | "PR_SET_THP_DISABLE"
+            | "QFMT_VFS_OLD"
+            | "QFMT_VFS_V0"
+            | "RB_KEXEC"
+            | "RB_SW_SUSPEND"
+            | "SOL_NETLINK"
+            | "SO_BUSY_POLL"
+            | "SO_PEEK_OFF"
+            | "SO_REUSEPORT"
+                if arm && uclibc =>
+            {
+                true
+            }
+
+            s if arm && uclibc && s.starts_with("PR_SET_MM")
 
             _ => false,
         }

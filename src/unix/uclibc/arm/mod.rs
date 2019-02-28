@@ -633,6 +633,11 @@ extern {
                   offset: ::off_t) -> ::ssize_t;
 }
 
+fn CMSG_ALIGN(len: usize) -> usize {
+    len + ::mem::size_of::<usize>() - 1 & !(::mem::size_of::<usize>() - 1)
+}
+
+
 f! {
     pub fn CMSG_FIRSTHDR(mhdr: *const msghdr) -> *mut cmsghdr {
         if (*mhdr).msg_controllen as usize >= ::mem::size_of::<cmsghdr>() {

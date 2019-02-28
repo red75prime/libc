@@ -810,8 +810,6 @@ fn do_ctest() {
                 true
             }
 
-            s if arm && uclibc && s.starts_with("PR_SET_MM")
-
             _ => false,
         }
     });

@@ -814,7 +814,6 @@ fn do_ctest() {
             | "SO_PEEK_OFF"
             | "SO_REUSEPORT"
             | "SI_LOAD_SHIFT"
-            |
                 if arm && uclibc =>
             {
                 true

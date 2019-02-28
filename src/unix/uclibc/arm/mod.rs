@@ -542,10 +542,6 @@ s! {
         pub sa_mask: sigset_t,
     }
 
-    pub struct sem_t {
-        __size: [::c_long; 4],
-    }
-
     pub struct termios {
         pub c_iflag: ::tcflag_t,
         pub c_oflag: ::tcflag_t,
@@ -689,4 +685,14 @@ f! {
         }
     }
 
+}
+
+cfg_if! {
+    if #[cfg(libc_align)] {
+        mod align;
+        pub use self::align::*;
+    } else {
+        mod no_align;
+        pub use self::no_align::*;
+    }
 }

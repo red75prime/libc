@@ -22,7 +22,6 @@ pub const RLIM_INFINITY: rlim_t = !0;
 pub const __SIZEOF_PTHREAD_ATTR_T: usize = 36;
 pub const __SIZEOF_PTHREAD_MUTEX_T: usize = 24;
 pub const __SIZEOF_PTHREAD_MUTEXATTR_T: usize = 4;
-pub const __SIZEOF_PTHREAD_COND_T: usize = 48;
 pub const __SIZEOF_PTHREAD_COND_COMPAT_T: usize = 12;
 pub const __SIZEOF_PTHREAD_CONDATTR_T: usize = 4;
 pub const __SIZEOF_PTHREAD_RWLOCK_T: usize = 32;
@@ -496,10 +495,6 @@ s! {
         pub st_mtim: ::timespec,
         pub st_ctim: ::timespec,
         pub st_ino: ::ino64_t,
-    }
-
-    pub struct fsid_t {
-        __val: [::c_int; 2],
     }
 
     pub struct flock {

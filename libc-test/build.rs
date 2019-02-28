@@ -500,6 +500,13 @@ fn do_ctest() {
                 true
             }
 
+            // uclibc deviates in signedness and type (but not size on 32-bit arm) of sa_flags
+            | "sigaction"
+                if uclibc && arm => 
+            {
+                true
+            }
+
             _ => false,
         }
     });
@@ -807,6 +814,8 @@ fn do_ctest() {
             | "SO_BUSY_POLL"
             | "SO_PEEK_OFF"
             | "SO_REUSEPORT"
+            | "SI_LOAD_SHIFT"
+            |
                 if arm && uclibc =>
             {
                 true

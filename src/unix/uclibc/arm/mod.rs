@@ -278,7 +278,7 @@ pub const O_NDELAY: ::c_int = 0x800;
 pub const O_NOCTTY: ::c_int = 0x100;
 pub const O_NOFOLLOW: ::c_int = 0x8000;
 pub const O_NONBLOCK: ::c_int = 0x800;
-pub const O_SYNC: ::c_int = 0x101000;
+pub const O_SYNC: ::c_int = 0o10000;
 pub const O_TRUNC: ::c_int = 0x200;
 pub const PARENB: ::tcflag_t = 0x100;
 pub const PARODD: ::tcflag_t = 0x200;
@@ -435,6 +435,16 @@ pub const _SC_V6_ILP32_OFFBIG: ::c_int = 0xb1;
 pub const _SC_V6_LP64_OFF64: ::c_int = 0xb2;
 pub const _SC_V6_LPBIG_OFFBIG: ::c_int = 0xb3;
 pub const _SC_XOPEN_STREAMS: ::c_int = 0xf6;
+
+pub const Q_SYNC: ::c_int = 0x800001;
+pub const Q_QUOTAON: ::c_int =  0x800002;
+pub const Q_QUOTAOFF: ::c_int =  0x800003;
+pub const Q_GETFMT: ::c_int =  0x800004;
+pub const Q_GETINFO: ::c_int =  0x800005;
+pub const Q_SETINFO: ::c_int =  0x800006;
+pub const Q_GETQUOTA: ::c_int =  0x800007;
+pub const Q_SETQUOTA: ::c_int =  0x800008;
+pub const Q_GETNEXTQUOTA: ::c_int =  0x800009;
 
 s! {
     pub struct cmsghdr {

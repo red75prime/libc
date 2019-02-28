@@ -835,11 +835,16 @@ pub const MNT_EXPIRE: ::c_int = 0x4;
 
 pub const MNT_FORCE: ::c_int = 0x1;
 
-pub const Q_SYNC: ::c_int = 0x600;
-pub const Q_QUOTAON: ::c_int = 0x100;
-pub const Q_QUOTAOFF: ::c_int = 0x200;
-pub const Q_GETQUOTA: ::c_int = 0x300;
-pub const Q_SETQUOTA: ::c_int = 0x400;
+cfg_if! {
+    if #[cfg(not(target_arch = "arm"))] {
+        // These are for kernels < 2.4.22
+        pub const Q_SYNC: ::c_int = 0x600;
+        pub const Q_QUOTAON: ::c_int = 0x100;
+        pub const Q_QUOTAOFF: ::c_int = 0x200;
+        pub const Q_GETQUOTA: ::c_int = 0x300;
+        pub const Q_SETQUOTA: ::c_int = 0x400;
+    }
+}
 
 pub const TCIOFF: ::c_int = 2;
 pub const TCION: ::c_int = 3;

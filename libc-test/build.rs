@@ -475,6 +475,15 @@ fn do_ctest() {
                 true
             }
 
+            // those are in linux/in.h or missing
+            "IPPROTO_BEETPH"
+            | "IPPROTO_MH"
+            | "IPPROTO_MPLS"
+                if uclibc && aarch64 =>
+            {
+                true
+            }
+
             // Musl uses old, patched kernel headers
             "FALLOC_FL_COLLAPSE_RANGE"
             | "FALLOC_FL_ZERO_RANGE"

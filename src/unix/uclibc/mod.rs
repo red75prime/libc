@@ -351,20 +351,22 @@ s_no_extra_traits! {
         pub domainname: [::c_char; 65]
     }
 
-    #[cfg(not(target_arch = "aarch64"))]
-    #[allow(missing_debug_implementations)]
-    pub struct dirent {
-        pub d_ino: ::ino_t,
-        pub d_off: ::off_t,
-        pub d_reclen: ::c_ushort,
-        pub d_type: ::c_uchar,
-        pub d_name: [::c_char; 256],
-    }
-
     #[allow(missing_debug_implementations)]
     pub struct dirent64 {
         pub d_ino: ::ino64_t,
         pub d_off: ::off64_t,
+        pub d_reclen: ::c_ushort,
+        pub d_type: ::c_uchar,
+        pub d_name: [::c_char; 256],
+    }
+}
+
+#[cfg(not(target_arch = "aarch64"))]
+s_no_extra_traits! {
+    #[allow(missing_debug_implementations)]
+    pub struct dirent {
+        pub d_ino: ::ino_t,
+        pub d_off: ::off_t,
         pub d_reclen: ::c_ushort,
         pub d_type: ::c_uchar,
         pub d_name: [::c_char; 256],

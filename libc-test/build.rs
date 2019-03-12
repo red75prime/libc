@@ -48,6 +48,11 @@ fn do_ctest() {
         cfg.define("_WITH_GETLINE", None);
     }
 
+    // uClibc uses older structure versions
+    if uclibc && aarch64 {
+        cfg.define("_LINUX_QUOTA_VERSION", Some("1"));
+    };
+
     // Android doesn't actually have in_port_t but it's much easier if we
     // provide one for us to test against
     if android {
@@ -94,7 +99,9 @@ fn do_ctest() {
     cfg.header("sys/socket.h");
     if linux && !musl {
         cfg.header("linux/if.h");
-        cfg.header("sys/auxv.h");
+        if !(uclibc && aarch64) {
+            cfg.header("sys/auxv.h");
+        };
     }
     cfg.header("sys/time.h");
     cfg.header("sys/un.h");
@@ -233,7 +240,9 @@ fn do_ctest() {
 
     if linux || android {
         cfg.header("sys/fsuid.h");
-        cfg.header("linux/module.h");
+        if !(uclibc && aarch64) {
+            cfg.header("linux/module.h");
+        };
         cfg.header("linux/seccomp.h");
         cfg.header("linux/if_ether.h");
         cfg.header("linux/if_tun.h");

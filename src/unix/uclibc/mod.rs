@@ -351,6 +351,7 @@ s_no_extra_traits! {
         pub domainname: [::c_char; 65]
     }
 
+    #[cfg(not(target_arch = "aarch64"))]
     #[allow(missing_debug_implementations)]
     pub struct dirent {
         pub d_ino: ::ino_t,
@@ -1908,6 +1909,9 @@ cfg_if! {
     } else if #[cfg(target_arch = "arm")] {
         mod arm;
         pub use self::arm::*;
+    } else if #[cfg(target_arch = "aarch64")] {
+        mod aarch64;
+        pub use self::aarch64::*;
     } else {
         pub use unsupported_target;
     }

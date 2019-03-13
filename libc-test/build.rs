@@ -479,6 +479,22 @@ fn do_ctest() {
             "IPPROTO_BEETPH"
             | "IPPROTO_MH"
             | "IPPROTO_MPLS"
+            | "AIO_ALLDONE"
+            | "AIO_CANCELED"
+            | "AIO_NOTCANCELED"
+            | "CLONE_NEWCGROUP"
+            | "EPOLLEXCLUSIVE"
+            | "EPOLLWAKEUP"
+            | "EXTPROC"
+            | "LIO_NOP"
+            | "LIO_NOWAIT"
+            | "LIO_READ"
+            | "LIO_WAIT"
+            | "LIO_WRITE"
+            | "O_TMPFILE"
+            | "RB_KEXEC"
+            | "RB_SW_SUSPEND"
+            | "SOL_NETLINK"
                 if uclibc && aarch64 =>
             {
                 true
@@ -702,7 +718,10 @@ fn do_ctest() {
         // type siginfo_t.si_addr changed from OpenBSD 6.0 to 6.1
         (openbsd && struct_ == "siginfo_t" && field == "si_addr") ||
         // this one is an anonymous union
-        (linux && struct_ == "ff_effect" && field == "u")
+        (linux && struct_ == "ff_effect" && field == "u") ||
+        // uClibc uses `unsigned long` for sigaction.sa_flags
+        // while everyone expects `int`, so it's int + padding in Rust struct
+        (uclibc && aarch64 && struct_ == "sigaction" && field == "sa_flags")
     });
 
     cfg.skip_field(move |struct_, field| {
@@ -720,7 +739,9 @@ fn do_ctest() {
                                            field == "_pad2" ||
                                            field == "ssi_syscall" ||
                                            field == "ssi_call_addr" ||
-                                           field == "ssi_arch"))
+                                           field == "ssi_arch")) ||
+        // for uClibc `_pad1` was added to `sigaction` to keep `sa_flags` as `int`
+        (struct_ == "sigaction" && field == "_pad1")
     });
 
     // FIXME: remove

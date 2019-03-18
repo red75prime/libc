@@ -170,7 +170,7 @@ s! {
         // but nix crate expects `int`
         pub sa_flags: ::c_int,
         _pad1: ::c_int,
-        pub sa_restorer: Option<extern fn()>,
+        pub sa_restorer: ::Option<extern fn()>,
         pub sa_mask: sigset_t,
     }
 }
@@ -183,7 +183,7 @@ s! {
         // but nix crate expects `int`
         _pad1: ::c_int,
         pub sa_flags: ::c_int,
-        pub sa_restorer: Option<extern fn()>,
+        pub sa_restorer: ::Option<extern fn()>,
         pub sa_mask: sigset_t,
     }
 }

@@ -216,6 +216,7 @@ pub const __SIZEOF_PTHREAD_BARRIERATTR_T: usize = 8;
 pub const NCCS: usize = 32;
 pub const SIGSTKSZ: ::size_t = 8192;
 pub const MINSIGSTKSZ: ::size_t = 2048;
+pub const PTHREAD_STACK_MIN: ::size_t = 16384;
 
 // Older versions of quota constants?
 pub const Q_SYNC: ::c_int = 0x800001;

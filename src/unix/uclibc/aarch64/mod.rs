@@ -170,7 +170,7 @@ s! {
         // but nix crate expects `int`
         pub sa_flags: ::c_int,
         _pad1: ::c_int,
-        pub sa_restorer: Option<extern "C" fn()>,
+        pub sa_restorer: Option<extern fn()>,
         pub sa_mask: sigset_t,
     }
 }
@@ -183,11 +183,10 @@ s! {
         // but nix crate expects `int`
         _pad1: ::c_int,
         pub sa_flags: ::c_int,
-        pub sa_restorer: Option<extern "C" fn()>,
+        pub sa_restorer: Option<extern fn()>,
         pub sa_mask: sigset_t,
     }
 }
-
 
 pub const O_CLOEXEC: ::c_int = 0o2000000;
 pub const RLIM_INFINITY: rlim_t = !0;

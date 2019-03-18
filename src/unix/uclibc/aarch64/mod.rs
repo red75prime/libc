@@ -54,13 +54,13 @@ s! {
         // it's `st_atime: ::timespec`, but libstd wants `st_atime`
         //pub st_atim: ::timespec,
         pub st_atime: ::c_long,
-        pub st_atime_nsec: ::c_ulong,
+        pub st_atime_nsec: ::c_long,
         //pub st_mtim: ::timespec,
         pub st_mtime: ::c_long,
-        pub st_mtime_nsec: ::c_ulong,
+        pub st_mtime_nsec: ::c_long,
         //pub st_ctim: ::timespec,
         pub st_ctime: ::c_long,
-        pub st_ctime_nsec: ::c_ulong,
+        pub st_ctime_nsec: ::c_long,
         pub __unused4: ::c_uint,
         pub __unused5: ::c_uint,
     }
@@ -82,13 +82,13 @@ s! {
         // it's `st_atime: ::timespec`, but libstd wants `st_atime`
         //pub st_atim: ::timespec,
         pub st_atime: ::c_long,
-        pub st_atime_nsec: ::c_ulong,
+        pub st_atime_nsec: ::c_long,
         //pub st_mtim: ::timespec,
         pub st_mtime: ::c_long,
-        pub st_mtime_nsec: ::c_ulong,
+        pub st_mtime_nsec: ::c_long,
         //pub st_ctim: ::timespec,
         pub st_ctime: ::c_long,
-        pub st_ctime_nsec: ::c_ulong,
+        pub st_ctime_nsec: ::c_long,
         pub __unused4: ::c_uint,
         pub __unused5: ::c_uint,
     }

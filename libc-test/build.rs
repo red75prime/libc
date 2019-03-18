@@ -333,6 +333,16 @@ fn do_ctest() {
                     s.replace("e_nsec", ".tv_nsec")
                 }
             }
+            s if s.ends_with("time") && struct_.starts_with("stat") => {
+                if aarch64 && uclibc {
+                    let mut name = s.to_string();
+                    name.pop();
+                    name.push_str(".tv_sec");
+                    name
+                } else {
+                    s.to_string()
+                }
+            }
             "u64" if struct_ == "epoll_event" => "data.u64".to_string(),
             "type_"
                 if (linux || freebsd)

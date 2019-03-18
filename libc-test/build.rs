@@ -48,7 +48,7 @@ fn do_ctest() {
         cfg.define("_WITH_GETLINE", None);
     }
 
-    // uClibc uses older structure versions
+    // Rust uClibc bindings use older structure versions
     if uclibc && aarch64 {
         cfg.define("_LINUX_QUOTA_VERSION", Some("1"));
     };
@@ -741,7 +741,10 @@ fn do_ctest() {
                                            field == "ssi_call_addr" ||
                                            field == "ssi_arch")) ||
         // for uClibc `_pad1` was added to `sigaction` to keep `sa_flags` as `int`
-        (struct_ == "sigaction" && field == "_pad1")
+        (struct_ == "sigaction" && field == "_pad1") ||
+        // uClibc uses `ulong` for `sa_flags`, Rust binding uses two `int`s
+        // for nix crate compatibility
+        (struct_ == "sigaction" && field == "sa_flags")
     });
 
     // FIXME: remove

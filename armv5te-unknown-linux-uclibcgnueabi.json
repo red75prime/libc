@@ -1,0 +1,54 @@
+{
+  "allow-asm": true,
+  "arch": "arm",
+  "archive-format": "gnu",
+  "code-model": "small",
+  "cpu": "arm926ej-s",
+  "custom-unwind-resume": false,
+  "data-layout": "e-m:e-p:32:32-i64:64-v128:64:128-a:0:32-n32-S64",
+  "disable-redzone": true,
+  "dll-prefix": "lib",
+  "dll-suffix": ".so",
+  "dynamic-linking": true,
+  "eliminate-frame-pointer": true,
+  "env": "uclibc",
+  "exe-suffix": "",
+  "executables": true,
+  "features": "+v5te,+dsp,+soft-float,+strict-align,-crypto,-neon",
+  "function-sections": true,
+  "has-elf-tls": false,
+  "has-rpath": true,
+  "is-like-android": false,
+  "is-like-msvc": false,
+  "is-like-osx": false,
+  "is-like-windows": false,
+  "late-link-args": {
+    "gcc": []
+  },
+  "linker-flavor": "gcc",
+  "linker-is-gnu": true,
+  "llvm-target": "armv5te-iris-linux-uclibcgnueabi",
+  "no-compiler-rt": false,
+  "no-default-libraries": true,
+  "os": "linux",
+  "panic-strategy": "abort",
+  "position-independent-executables": false,
+  "post-link-args": {
+    "gcc": []
+  },
+  "post-link-objects": [],
+  "pre-link-args": {
+    "gcc": []
+  },
+  "pre-link-objects-dll": [],
+  "pre-link-objects-exe": [],
+  "relocation-model": "pic",
+  "staticlib-prefix": "lib",
+  "staticlib-suffix": ".a",
+  "target-c-int-width": "32",
+  "target-endian": "little",
+  "target-family": "unix",
+  "target-pointer-width": "32",
+  "vendor": "iris"
+}
+

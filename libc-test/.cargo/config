@@ -1,0 +1,3 @@
+[target.armv5te-unknown-linux-uclibcgnueabi]
+linker = "/firmware/buildroot/output/host/usr/bin/arm-buildroot-linux-uclibcgnueabi-gcc"
+runner = "/root/libc/libc-test/runner.sh"

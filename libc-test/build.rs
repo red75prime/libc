@@ -1840,7 +1840,7 @@ fn test_linux(target: &str) {
     assert!(target.contains("linux"));
 
     // target_env
-    let gnu = target.contains("gnu");
+    let gnu = target.contains("gnu") && !target.contains("uclibc");
     let musl = target.contains("musl");
     let uclibc = target.contains("uclibc");
 
@@ -1863,6 +1863,10 @@ fn test_linux(target: &str) {
     let sparc64 = target.contains("sparc64");
 
     let mut cfg = ctest::TestGenerator::new();
+
+    //cfg.include("/firmware/buildroot/output/build/uclibc-1.0.24/include");
+    //cfg.include("/firmware/buildroot/output/build/linux-headers-3.0.8/include");
+
     cfg.define("_GNU_SOURCE", None);
     // This macro re-deifnes fscanf,scanf,sscanf to link to the symbols that are
     // deprecated since glibc >= 2.29. This allows Rust binaries to link against
@@ -1967,7 +1971,7 @@ fn test_linux(target: &str) {
                [!(x32 || musl)]: "sys/sysctl.h",
                // <execinfo.h> is not supported by musl:
                // https://www.openwall.com/lists/musl/2015/04/09/3
-               [!musl]: "execinfo.h",
+               [!musl && !uclibc]: "execinfo.h",
     }
 
     // Include linux headers at the end:
@@ -1980,17 +1984,17 @@ fn test_linux(target: &str) {
         "linux/futex.h",
         "linux/genetlink.h",
         // FIXME: musl version 1.0.15 used by mips build jobs is ancient
-        [!mips32_musl]: "linux/if.h",
+        [!mips32_musl && !uclibc]: "linux/if.h",
         "linux/if_addr.h",
         "linux/if_alg.h",
         "linux/if_ether.h",
         "linux/if_tun.h",
         "linux/input.h",
         "linux/magic.h",
-        "linux/memfd.h",
-        "linux/module.h",
+        //"linux/memfd.h",
+        //"linux/module.h",
         "linux/net_tstamp.h",
-        "linux/netfilter/nf_tables.h",
+        //"linux/netfilter/nf_tables.h",
         "linux/netfilter_ipv4.h",
         "linux/netfilter_ipv6.h",
         "linux/netlink.h",
@@ -1998,9 +2002,9 @@ fn test_linux(target: &str) {
         "linux/random.h",
         "linux/reboot.h",
         "linux/rtnetlink.h",
-        "linux/seccomp.h",
+        //"linux/seccomp.h",
         "linux/sockios.h",
-        "sys/auxv.h",
+        //"sys/auxv.h",
     }
 
     // note: aio.h must be included before sys/mount.h
@@ -2008,7 +2012,7 @@ fn test_linux(target: &str) {
         cfg:
         "sys/xattr.h",
         "sys/sysinfo.h",
-        "aio.h",
+        //"aio.h",
     }
 
     cfg.type_name(move |ty, is_struct, is_union| {

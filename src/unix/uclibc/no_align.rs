@@ -2,15 +2,16 @@ macro_rules! expand_align {
     () => {
         s! {
             pub struct pthread_mutex_t {
-                #[cfg(any(target_arch = "mips",
-                          target_arch = "arm",
-                          target_arch = "powerpc"))]
-                __align: [::c_long; 0],
-                #[cfg(any(libc_align,
-                          target_arch = "mips",
-                          target_arch = "arm",
-                          target_arch = "powerpc"))]
-                __align: [::c_longlong; 0],
+                #[cfg(all(target_pointer_width = "32",
+                           any(target_arch = "mips",
+                               target_arch = "arm",
+                               target_arch = "powerpc")))]
+                __align: [u32; 0],
+                #[cfg(any(target_pointer_width = "64",
+                           not(any(target_arch = "mips",
+                                   target_arch = "arm",
+                                   target_arch = "powerpc"))))]
+                __align: [u64; 0],
                 size: [u8; ::__SIZEOF_PTHREAD_MUTEX_T],
             }
 
